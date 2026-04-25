@@ -5,7 +5,7 @@
 
 set -euo pipefail
 
-readonly SOPS_VERSION="v3.9.4"
+readonly SOPS_VERSION="v3.12.2"
 readonly INFRA_DIR="/opt/_infra"
 readonly DATA_DIR="/opt/_data"
 readonly BACKUP_DIR="/opt/_backups"
