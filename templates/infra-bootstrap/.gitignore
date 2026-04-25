@@ -1,0 +1,19 @@
+# Secrets en clair — NE JAMAIS COMMITER
+secrets.yaml
+*.yaml.bak
+
+# Volumes runtime
+data/
+!data/.gitkeep
+
+# Clés age (privées)
+keys.txt
+age/
+
+# OS
+.DS_Store
+
+# Dotenv générés à la volée
+.env
+.env.local
+.env.traefik
