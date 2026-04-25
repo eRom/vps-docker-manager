@@ -2,7 +2,9 @@
 # Remplacer les __AGE_PUBKEY_*__ par les vraies cles age publiques.
 # Au minimum 2 cles : laptop (developpeur) + VPS (runtime).
 creation_rules:
-  - path_regex: secrets\.enc\.yaml$
+  # Matche secrets.yaml (source en clair) ET secrets.enc.yaml (destination chiffree)
+  # mais PAS secrets.example.yaml (template versionne).
+  - path_regex: (^|/)secrets(\.enc)?\.yaml$
     age:
       - __AGE_PUBKEY_LAPTOP__
       - __AGE_PUBKEY_VPS__
