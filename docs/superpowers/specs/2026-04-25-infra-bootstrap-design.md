@@ -498,7 +498,7 @@ cd /opt/buck-writer-app/vps && docker compose up -d
 - [ ] `https://status.apps.romain-ecarnot.com` répond 200, cert LE valide, Uptime Kuma initialisé
 - [ ] Alerte Telegram configurée et testée (down forcé d'un service factice → notification reçue)
 - [ ] Backup `acme.json` automatisé via `scripts/backup-acme.sh` (cron daily sur VPS)
-- [ ] Trinity et Buck (anciens) **toujours fonctionnels** en parallèle sur leurs anciens domaines
+- [x] ~~Trinity et Buck (anciens) toujours fonctionnels en parallèle~~ — **déplacé vers `migration-trinity-buck`** (Romain a validé un wipe complet du Docker existant en pré-bootstrap, ce critère n'a donc pas de sens dans `infra-bootstrap`)
 - [ ] Spec et template commités dans `vps-docker-manager` (public)
 - [ ] `vps-docker-manager-prod` créé en privé sur GitHub avec premier déploiement
 - [ ] README documente la procédure complète
