@@ -1,0 +1,12 @@
+# Regles sops pour ce projet.
+# Remplacer les __AGE_PUBKEY_*__ par les vraies cles age publiques.
+# Au minimum 2 cles : laptop (developpeur) + VPS (runtime).
+creation_rules:
+  - path_regex: secrets\.enc\.yaml$
+    age:
+      - __AGE_PUBKEY_LAPTOP__
+      - __AGE_PUBKEY_VPS__
+  - path_regex: \.env\.enc$
+    age:
+      - __AGE_PUBKEY_LAPTOP__
+      - __AGE_PUBKEY_VPS__
