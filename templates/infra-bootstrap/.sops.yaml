@@ -4,7 +4,7 @@
 creation_rules:
   # Matche secrets.yaml (source en clair) ET secrets.enc.yaml (destination chiffree)
   # mais PAS secrets.example.yaml (template versionne).
-  - path_regex: (^|/)secrets(\.enc)?\.yaml$
+  - path_regex: '(^|/)secrets(\.enc)?\.yaml$'
     age:
       - __AGE_PUBKEY_LAPTOP__
       - __AGE_PUBKEY_VPS__
