@@ -1,0 +1,32 @@
+http:
+  middlewares:
+    # BasicAuth pour le dashboard Traefik.
+    # Le fichier .htpasswd-dashboard est genere par start.sh depuis sops
+    # (cle traefik.DASHBOARD_BASIC_AUTH au format "user:bcrypt-hash").
+    dashboard-auth:
+      basicAuth:
+        usersFile: /dynamic/.htpasswd-dashboard
+
+    # Headers securite par defaut, applicable a tout service via @file.
+    security-headers:
+      headers:
+        frameDeny: true
+        contentTypeNosniff: true
+        browserXssFilter: true
+        referrerPolicy: "strict-origin-when-cross-origin"
+        stsSeconds: 31536000
+        stsIncludeSubdomains: true
+        stsPreload: true
+
+    # Rate limit global a appliquer aux APIs sensibles via labels projet.
+    api-ratelimit:
+      rateLimit:
+        average: 100
+        burst: 50
+
+    # Redirect www -> apex.
+    redirect-www:
+      redirectRegex:
+        regex: "^https://www\\.(.+)"
+        replacement: "https://${1}"
+        permanent: true
