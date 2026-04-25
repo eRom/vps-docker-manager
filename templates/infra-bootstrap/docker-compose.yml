@@ -16,6 +16,9 @@ services:
       - "443:443"
     environment:
       CF_DNS_API_TOKEN: ${CF_DNS_API_TOKEN}
+      # Workaround Docker 29 : forcer la version d'API client a 1.44
+      # (sinon Traefik negocie en 1.24 et le daemon refuse).
+      DOCKER_API_VERSION: "1.44"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./traefik/traefik.yml:/traefik.yml:ro
