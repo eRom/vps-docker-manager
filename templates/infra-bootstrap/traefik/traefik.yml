@@ -1,0 +1,48 @@
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+
+log:
+  level: INFO
+  format: json
+
+api:
+  dashboard: true
+  insecure: false
+
+entryPoints:
+  web:
+    address: ":80"
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+          permanent: true
+  websecure:
+    address: ":443"
+
+providers:
+  docker:
+    exposedByDefault: false
+    network: traefik-public
+  file:
+    directory: /dynamic
+    watch: true
+
+certificatesResolvers:
+  acme-cloudflare:
+    acme:
+      email: romain@romain-ecarnot.com
+      storage: /data/acme.json
+      # === PREMIER BOOT : staging actif (limite haute, certs auto-signes navigateur) ===
+      caServer: https://acme-staging-v02.api.letsencrypt.org/directory
+      # === APRES VALIDATION : commenter le staging ci-dessus, decommenter prod ci-dessous,
+      #     supprimer data/acme.json, redemarrer Traefik ===
+      # caServer: https://acme-v02.api.letsencrypt.org/directory
+      dnsChallenge:
+        provider: cloudflare
+        resolvers:
+          - "1.1.1.1:53"
+          - "8.8.8.8:53"
+        delayBeforeCheck: 30
