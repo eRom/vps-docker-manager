@@ -5,9 +5,40 @@ description: Onboarde une nouvelle app dans le pattern deploy-vps multi-apps. Cr
 
 # bootstrap <app>
 
-Onboarde une nouvelle app dans le pattern `deploy-vps`. Workflow interactif.
+Onboarde une **nouvelle** app dans le pattern `deploy-vps`. Workflow interactif.
 
 Repo orchestrateur : `${VPS_ORCHESTRATOR_PATH}` (eRom/vps-docker-manager-prod, prive). Sur GA : `${{ github.workspace }}`.
+
+## Etape 0 — Pre-flight guards (fail-fast)
+
+**AVANT toute action**, verifier qu'aucun artefact bootstrap n'existe deja. Si une seule de ces conditions est vraie, **STOPPER immediatement** et signaler a l'utilisateur :
+
+```bash
+cd ${VPS_ORCHESTRATOR_PATH}
+
+# Guard 1 : state app cote orchestrateur
+[ -d "apps/$APP" ] && abort "apps/$APP/ existe deja — app deja bootstrapee. Edite manuellement ou supprime d'abord."
+
+# Guard 2 : secrets sops chiffre
+[ -f "secrets/$APP.enc.yaml" ] && abort "secrets/$APP.enc.yaml existe deja — risque d'ecraser tes secrets prod. STOP."
+
+# Guard 3 : entree README
+grep -q "| $APP |" README.md && abort "$APP deja liste dans README.md. STOP."
+
+# Guard 4 : compose dans le repo app
+APP_REPO_LOCAL="${APP_REPO_LOCAL:-$HOME/dev/${APP_REPO##*/}}"
+if [ -d "$APP_REPO_LOCAL" ]; then
+  [ -f "$APP_REPO_LOCAL/deploy-vps/compose.yml" ] && abort "$APP_REPO_LOCAL/deploy-vps/compose.yml existe deja — risque d'ecraser ta config. STOP."
+  [ -f "$APP_REPO_LOCAL/.github/workflows/release.yml" ] && abort "$APP_REPO_LOCAL/.github/workflows/release.yml existe deja. STOP."
+fi
+```
+
+`abort` = afficher le message en rouge et `exit 1`. **Aucune option `--force`** : si l'utilisateur veut reconfigurer une app deja onboarded, il edite manuellement les fichiers concernes (ou utilisera une futur skill `reconfigure`).
+
+Cette skill est **strictement pour onboarding initial**. Pour modifier une app existante :
+- Changer un secret -> skill `secret-rotate`
+- Changer le compose -> editer `<app-repo>/deploy-vps/compose.yml` directement
+- Changer la version deployee -> skill `deploy` (nouveau tag)
 
 ## Workflow
 
@@ -137,7 +168,7 @@ Reste a faire (toi):
 
 ## Restrictions
 
-- Si `apps/$APP/` existe deja, demander confirmation overwrite.
+- **Strictement onboarding initial** : si Etape 0 detecte n'importe quel artefact existant, ABORT. Pas d'option `--force`.
 - NE JAMAIS committer le secret en clair (`secrets/$APP.yaml`).
 - `shred -u` apres chiffrement, pas `rm`.
 - Verifier l'IP VPS dans Cloudflare AVANT le premier deploy (skill `dns`).
