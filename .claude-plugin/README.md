@@ -28,6 +28,7 @@ Toute skill/agent qui en a besoin fait un fail explicite avec `${VAR:?Set VAR in
 - `status` — Snapshot containers + healthcheck (read-only)
 - `logs` — Tail Docker logs
 - `secret-rotate` — Edit/rotate secrets sops (input silencieux)
+- `env-sync` — Sync `.env` local -> `secrets/<app>.enc.yaml` chiffre (pipe stream-only, zero leak)
 - `dns` — Pre-flight DNS check Cloudflare
 
 ## Agents
