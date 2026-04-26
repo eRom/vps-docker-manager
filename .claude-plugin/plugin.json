@@ -1,0 +1,20 @@
+{
+  "name": "hostinger",
+  "description": "Deploy multi-apps Docker pattern : tag-driven release pipeline (GHCR + sops + Traefik) pour VPS unique.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Romain Ecarnot",
+    "url": "https://github.com/eRom"
+  },
+  "repository": "https://github.com/eRom/vps-docker-manager",
+  "license": "MIT",
+  "keywords": [
+    "deploy",
+    "docker",
+    "vps",
+    "ghcr",
+    "sops",
+    "traefik",
+    "multi-apps"
+  ]
+}
