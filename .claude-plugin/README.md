@@ -22,20 +22,20 @@ Toute skill/agent qui en a besoin fait un fail explicite avec `${VAR:?Set VAR in
 
 ## Skills
 
-- `bootstrap` — Onboard une nouvelle app dans le pattern
-- `deploy` — Tag + push + watch pipeline GA
-- `rollback` — Rollback via UI GA (chemin A) ou SSH (chemin B)
-- `status` — Snapshot containers + healthcheck (read-only)
-- `logs` — Tail Docker logs
-- `secret-rotate` — Edit/rotate secrets sops (input silencieux)
-- `env-sync` — Sync `.env` local -> `secrets/<app>.enc.yaml` chiffre (pipe stream-only, zero leak)
-- `dns` — Pre-flight DNS check Cloudflare
+- `bootstrap` - Onboard une nouvelle app dans le pattern
+- `deploy` - Tag + push + watch pipeline GA
+- `rollback` - Rollback via UI GA (chemin A) ou SSH (chemin B)
+- `status` - Snapshot containers + healthcheck (read-only)
+- `logs` - Tail Docker logs
+- `secret-rotate` - Edit/rotate secrets sops (input silencieux)
+- `env-sync` - Sync `.env` local -> `secrets/<app>.enc.yaml` chiffre (pipe stream-only, zero leak)
+- `dns` - Pre-flight DNS check Cloudflare
 
 ## Agents
 
-- `deploy-doctor` — Diagnostic read-only d'une app en panne
-- `deploy-clean` — Menage VPS (docker prune, dossiers obsoletes)
-- `update-checker` — Verifier nouvelles versions Docker images upstream
+- `deploy-doctor` - Diagnostic read-only d'une app en panne
+- `deploy-clean` - Menage VPS (docker prune, dossiers obsoletes)
+- `update-checker` - Verifier nouvelles versions Docker images upstream
 
 ## Pre-requis
 
